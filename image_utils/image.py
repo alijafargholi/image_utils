@@ -188,6 +188,32 @@ class Read(ImageBuf):
 
         return copy_image
 
+    @property
+    def colorspace(self):
+        """get image colorspace
+
+        :rtype: str
+        """
+        return self.__spec.getattribute('oiio:ColorSpace')
+
+    @colorspace.setter
+    def colorspace(self, new_colorspace):
+        """set the image colorspace.
+
+        Possible values:
+            - **Linear** Color pixel values are known to be scene-linear.
+            - **sRGB** Using standard sRGB response and primaries.
+            - **Rec709** Using standard Rec709 response and primaries.
+            - **ACES** ACES color space encoding.
+            - **AdobeRGB** Adobe RGB color space.
+            - **KodakLog** Kodak logarithmic color space.
+            - **GammaCorrectedX.Y** Color values have been gamma corrected
+
+        :type new_colorspace: str
+        :param new_colorspace: new image colorspace
+        """
+        ImageBufAlgo.colorconvert(self, self, self.colorspace, new_colorspace)
+
 
 if __name__ == '__main__':
     print(__doc__)
