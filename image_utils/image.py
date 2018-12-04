@@ -88,6 +88,7 @@ class Read(ImageBuf):
         if image_path:
             # make sure the path is correct and it exists
             if not os.path.exists(image_path):
+                self.__image_path = image_path
                 raise UserWarning("Can't locate the input image: "
                                   "{}".format(image_path))
             super(Read, self).__init__(image_path)
@@ -153,7 +154,7 @@ class Read(ImageBuf):
         """set data window"""
         self.set_full(x1, x2, y1, y2, 0, 0)
 
-    def duplicate(self, image_type=None):
+    def duplicate(self, pixel_type=None):
         """make a exact copy of this image. If a format is provided, this will
            get the specified pixel data type rather than using the same pixel
            format as the source ImageBuf.
@@ -165,19 +166,25 @@ class Read(ImageBuf):
                 >>> # create an image instance
                 >>> A = Read('foo.exr')
                 >>> # make a copy of it
-                >>> B = A.duplicate(PixelType.bit8)
+                >>> B = A.duplicate(PixelType().bit8)
 
-        :rtype image_type: OpenImageIO.BASETYPE
-        :param image_type: new image type. Example, float, half, 8bit
+        :rtype pixel_type: OpenImageIO.BASETYPE
+        :param pixel_type: new image type. i.e, float, half, 8bit
         :rtype: Image
         :return: duplicate of this image
         """
-        copy_image = Read()
 
-        if image_type:
-            copy_image.copy(self, image_type)
-        else:
-            copy_image.copy(self)
+        # use the same pixel type as the source image if not specified
+        if not pixel_type:
+            pixel_type = self.pixeltype
+
+        # Create an empty image with the same specs as the source image
+        copy_image = Read(width=self.width,
+                          height=self.height,
+                          channels=len(self.channels),
+                          pixel_type=pixel_type)
+
+        copy_image.copy(self, pixel_type)
 
         return copy_image
 
