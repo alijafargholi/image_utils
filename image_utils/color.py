@@ -4,24 +4,6 @@
 
 
 # TODO: not implement yet
-def set_color_space(source_image, color_space):
-    """convert the source image color space to the new color space
-
-    :param source_image:
-    :param color_space:
-    :return:
-    """
-
-    # bool ImageBufAlgo.colorconvert (dst, src, from, to, unpremult=True,
-    # context key="", context value="",
-    # colorconfig="", roi=ROI.All, nthreads=0)
-    # Apply a color transform to the pixel values.
-    # Examples:
-    # Src = ImageBuf ("tahoe.jpg")
-    # Dst = ImageBufAlgo.colorconvert (Src, "sRGB", "linear")
-
-
-# TODO: not implement yet
 def set_color_look(source_image, look):
     """apply an OpenColorIo "look" transform to the pixels
 
