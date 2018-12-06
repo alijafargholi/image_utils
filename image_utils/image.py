@@ -17,6 +17,8 @@ from OpenImageIO import ImageBufAlgo
 
 from image_utils.pixel_type import PixelType
 
+from image_utils import extention
+
 
 def constant(width, height, color=(1, 1, 1, 0), data_type=PixelType.float):
     """create constant image
@@ -92,12 +94,17 @@ class Read(ImageBuf):
                 raise UserWarning("Can't locate the input image: "
                                   "{}".format(image_path))
             super(Read, self).__init__(image_path)
+
         # construct an image with image size
         else:
             new_spec = OIIO.ImageSpec(width, height, channels, pixel_type)
             super(Read, self).__init__(new_spec)
 
         self.__spec = self.spec()
+
+        # add file format specific attributes
+        for attr_name, attr_value in getattr(extention, self.file_format).items():
+            setattr(self, attr_name, self.spec().getattribute(attr_value))
 
     @property
     def path(self):
@@ -131,12 +138,21 @@ class Read(ImageBuf):
         return bool(self.__spec.alpha_channel > 0)
 
     @property
-    def format(self):
-        """Returns the extension of the image"
+    def file_format(self):
+        """Returns the file format of the image"
+
+        Example:
+
+         ::
+
+            >>> from image_utils import image
+            >>> image_node = image.Read('foo.exr')
+            >>> print(image_node.file_format)
+            ... openexr
 
         :rtype: str
         """
-        return os.path.splitext(self.path)[-1].strip('.')
+        return self.file_format_name
 
     @property
     def data_window_coordinate(self):
@@ -155,9 +171,9 @@ class Read(ImageBuf):
         self.set_full(x1, x2, y1, y2, 0, 0)
 
     def duplicate(self, pixel_type=None):
-        """make a exact copy of this image. If a format is provided, this will
+        """make a exact copy of this image. If a file_format is provided, this will
            get the specified pixel data type rather than using the same pixel
-           format as the source ImageBuf.
+           file_format as the source ImageBuf.
 
            Example:
 
@@ -187,32 +203,6 @@ class Read(ImageBuf):
         copy_image.copy(self, pixel_type)
 
         return copy_image
-
-    @property
-    def colorspace(self):
-        """get image colorspace
-
-        :rtype: str
-        """
-        return self.__spec.getattribute('oiio:ColorSpace')
-
-    @colorspace.setter
-    def colorspace(self, new_colorspace):
-        """set the image colorspace.
-
-        Possible values:
-            - **Linear** Color pixel values are known to be scene-linear.
-            - **sRGB** Using standard sRGB response and primaries.
-            - **Rec709** Using standard Rec709 response and primaries.
-            - **ACES** ACES color space encoding.
-            - **AdobeRGB** Adobe RGB color space.
-            - **KodakLog** Kodak logarithmic color space.
-            - **GammaCorrectedX.Y** Color values have been gamma corrected
-
-        :type new_colorspace: str
-        :param new_colorspace: new image colorspace
-        """
-        ImageBufAlgo.colorconvert(self, self, self.colorspace, new_colorspace)
 
 
 if __name__ == '__main__':
