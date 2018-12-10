@@ -1,10 +1,11 @@
 """
 Implementing **transform** node features:
 
-- **crop**:
-- **crop_by_data_window**:
-- **resize**:
-- **scale**:
+- **crop**: Crop an image by the specified window
+- **crop_by_data_window**: Crop an image by its data window
+- **resize**: Resize the image to the new width and height. *Note that if the
+  new dimensions do not match the image proportion the image will be stretch*
+- **scale**: Scale the image by given factor
 """
 from OpenImageIO import ImageBufAlgo
 from OpenImageIO import ROI
@@ -31,10 +32,10 @@ def crop(source_image, x1, y1, x2, y2):
     :param source_image: source image to crop
     :type x1: int
     :param x1: X coordinate of beginning of the crop window
-    :type x2: int
-    :param x2: X coordinate of end of the crop window
     :type y1: int
     :param y1: Y coordinate of beginning of the crop window
+    :type x2: int
+    :param x2: X coordinate of end of the crop window
     :type y2: int
     :param y2: Y coordinate of end of the crop window
     :rtype: Image
@@ -45,7 +46,11 @@ def crop(source_image, x1, y1, x2, y2):
     height = y2 - y1
 
     # construct a new image
-    cropped_image = Read(width=width, height=height)
+    number_of_channels = len(source_image.channels)
+    cropped_image = Read(width=width,
+                         height=height,
+                         channels=number_of_channels,
+                         pixel_type=source_image.pixeltype)
     # crop the source image into the new image
     crop_window = ROI(x1, x2, y1, y2)
     crop_result = ImageBufAlgo.crop(cropped_image, source_image, crop_window)
