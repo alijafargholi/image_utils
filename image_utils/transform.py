@@ -1,11 +1,11 @@
 """
 Implementing **transform** node features:
 
-- **crop**: Crop an image by the specified window
-- **crop_by_data_window**: Crop an image by its data window
-- **resize**: Resize the image to the new width and height. *Note that if the
+- **Crop**: Crop an image by the specified window
+- **Crop_by_data_window**: Crop an image by its data window
+- **Resize**: Resize the image to the new width and height. *Note that if the
   new dimensions do not match the image proportion the image will be stretch*
-- **scale**: Scale the image by given factor
+- **Scale**: Scale the image by given factor
 """
 from OpenImageIO import ImageBufAlgo
 from OpenImageIO import ROI
