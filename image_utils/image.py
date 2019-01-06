@@ -108,10 +108,13 @@ class Read(ImageBuf):
         self.__spec = self.spec()
 
         # add file format specific attributes
-        attribute_data = getattr(extention, self.file_format, None)
-        if attribute_data:
-            for attr_name, attr_value in attribute_data.items():
-                setattr(self, attr_name, self.spec().getattribute(attr_value))
+        if self.file_format:
+            attribute_data = getattr(extention, self.file_format, None)
+            if attribute_data:
+                image_extension_attr = attribute_data.items()
+                for attr_name, attr_value in image_extension_attr:
+                    image_attr_value = self.spec().getattribute(attr_value)
+                    setattr(self, attr_name, image_attr_value)
 
     def premult(self):
         """pre-multiply the channels by alpha"""
