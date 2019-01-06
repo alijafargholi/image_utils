@@ -1,8 +1,10 @@
 """
-Image source methods:
+============
+Read Node
+============
 
 - **Read**:
-- **cConstant**:
+- **Constant**:
 - **Checker**:
 """
 from __future__ import print_function
@@ -20,7 +22,7 @@ from image_utils.pixel_type import PixelType
 from image_utils import extention
 
 
-def constant(width, height, color=(1, 1, 1, 0), data_type=PixelType.float):
+def constant(width, height, color=(1, 1, 1, 0), data_type=PixelType().float):
     """create constant image
 
     Example:
@@ -41,7 +43,10 @@ def constant(width, height, color=(1, 1, 1, 0), data_type=PixelType.float):
     :rtype: OpenImageIO.ImageBuf
     :return: constant image
     """
-    constant_image = ImageBuf(ImageSpec(width, height, 4, data_type))
+    constant_image = Read(width=width,
+                          height=height,
+                          channels=4,
+                          pixel_type=data_type)
     ImageBufAlgo.fill(constant_image, color, constant_image.roi_full)
     return constant_image
 
@@ -51,7 +56,7 @@ def checker(width,
             color_a=(1, 1, 1),
             color_b=(0, 0, 0),
             cells=10,
-            data_type=PixelType.float):
+            data_type=PixelType().float):
     """create checker image. default is black and white checker color
 
     :type width: int
@@ -85,7 +90,7 @@ class Read(ImageBuf):
                  width=100,
                  height=100,
                  channels=4,
-                 pixel_type=PixelType.float):
+                 pixel_type=PixelType().float):
         # construct an image with image path
         if image_path:
             # make sure the path is correct and it exists
@@ -103,8 +108,18 @@ class Read(ImageBuf):
         self.__spec = self.spec()
 
         # add file format specific attributes
-        for attr_name, attr_value in getattr(extention, self.file_format).items():
-            setattr(self, attr_name, self.spec().getattribute(attr_value))
+        attribute_data = getattr(extention, self.file_format, None)
+        if attribute_data:
+            for attr_name, attr_value in attribute_data.items():
+                setattr(self, attr_name, self.spec().getattribute(attr_value))
+
+    def premult(self):
+        """pre-multiply the channels by alpha"""
+        ImageBufAlgo.premult(self, self)
+
+    def unpremult(self):
+        """un-premultiply the channels by alpha"""
+        ImageBufAlgo.unpremult(self, self)
 
     @property
     def path(self):

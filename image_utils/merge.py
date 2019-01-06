@@ -1,111 +1,139 @@
 """
-Implementing **merge** node features:
+============
+Merge Node
+============
 
-- **Over**: composite input a over input B
-- **ZOver**: composite input and input B based on their z channel
-- **Add**:
-- **Sub**:
-- **premult**:
-- **unpremult**:
-- **clamp**:
-
+- **Over**: Composite input A over input B
+- **ZOver**: Composite input A and input B based on their z channel
+- **Add**: Add the pixel value of input A to input B
+- **Sub**: Subtract the pixel value of input A from input B
 """
+from OpenImageIO import ImageBufAlgo
+
+from image_utils.image import Read
 
 
-# TODO: not implement yet
 def over(input_a, input_b):
-    """composite input A over input B
+    """composite *(merge)* input A over input B
 
-    :param input_a:
-    :param input_b:
-    :return:
+    Example:
+
+    ..
+
+       >>> from image_utils.image import Read
+       >>> from image_utils.merge import over
+       >>> foreground_image = Read("fg.exr")
+       >>> background_image = Read("bg.exr")
+       >>> merged_image = over(foreground_image, background_image)
+       >>> merged_image.write("result.exr")
+
+    :type input_a: Read
+    :param input_a: foreground image
+    :type input_b: Read
+    :param input_b: background image
+    :rtype: Read
+    :return: merged read object
     """
-    #     bool ImageBufAlgo.over (dst, A, B, roi=ROI.All, nthreads=0)
-    # Composite ImageBuf A over ImageBuf B.
-    # Examples:
-    # Comp = ImageBufAlgo.over (ImageBuf("fg.exr"), ImageBuf("bg.exr"))
+
+    comp = input_b.duplicate()
+    input_a.premult()
+    ImageBufAlgo.over(comp, input_a, input_b)
+
+    if comp.has_error:
+        print "Error merging over:", comp.geterror()
+
+    return comp
 
 
-# TODO: not implement yet
 def zover(input_a, input_b):
     """composite input A and input B using their respective Z channels to
-    decide which is in front on a pixel-by-pixel basis.
+       decide which is in front on a pixel-by-pixel basis.
 
-    :param input_a:
-    :param input_b:
-    :return:
+    Example:
+
+    ..
+
+       >>> from image_utils.image import Read
+       >>> from image_utils.merge import zover
+       >>> image_a = Read("A.exr")
+       >>> image_b = Read("B.exr")
+       >>> z_merged_image = over(image_a, image_b)
+       >>> z_merged_image.write("result.exr")
+
+    :type input_a: Read
+    :param input_a: foreground image
+    :type input_b: Read
+    :param input_b: background image
+    :rtype: Read
+    :return: merged read object
     """
-    #     bool ImageBufAlgo.zover (dst, A, B, bool z zeroisinf=False,
-    # roi=ROI.All, nthreads=0)
-    # Composite ImageBuf A and ImageBuf B using their respective Z channels to decide which
-    # is in front on a pixel-by-pixel basis.
-    # Examples:
-    # Comp = ImageBufAlgo.zover (ImageBuf("fg.exr"), ImageBuf("bg.exr"))
+    zcomp = input_b.duplicate()
+
+    ImageBufAlgo.zover(zcomp, input_a, input_b)
+
+    if zcomp.has_error:
+        print "Error merging zover:", zcomp.geterror()
+
+    return zcomp
 
 
-# TODO: not implement yet
 def add(input_a, input_b):
     """add input A to input B
 
-    :param input_a:
-    :param input_b:
-    :return:
+    Example:
+
+    ..
+
+       >>> from image_utils.image import Read
+       >>> from image_utils.merge import add
+       >>> input_a = Read("image_a.exr")
+       >>> input_b = Read("image_b.exr")
+       >>> add_image = add(input_a, input_b)
+       >>> add_image.write("result.exr")
+
+    :type input_a: Read
+    :param input_a: foreground image
+    :type input_b: Read
+    :param input_b: background image
+    :rtype: Read
+    :return: result read object
     """
-    # ImageBufAlgo.unpremult(dst, src, roi=ROI.All, nthreads=0)
+    add_comp = input_b.duplicate()
+
+    ImageBufAlgo.add(add_comp, input_a, input_b)
+
+    if add_comp.has_error:
+        print "Error merging adding:", add_comp.geterror()
+
+    return add_comp
 
 
-# TODO: not implement yet
 def sub(input_a, input_b):
     """subtract input A from input B.
 
-    :param input_a:
-    :param input_b:
-    :return:
+    Example:
+
+    ..
+
+       >>> from image_utils.image import Read
+       >>> from image_utils.merge import sub
+       >>> input_a = Read("image_a.exr")
+       >>> input_b = Read("image_b.exr")
+       >>> sub_image = sub(input_a, input_b)
+       >>> sub_image.write("result.exr")
+
+    :type input_a: Read
+    :param input_a: foreground image
+    :type input_b: Read
+    :param input_b: background image
+    :rtype: Read
+    :return: merged read object
     """
-    #     bool ImageBufAlgo.sub (dst, A, B, roi=ROI.All, nthreads=0)
-    # Compute A - B. A and B each may be an ImageBuf, a float value (for all channels) or a
-    # tuple giving a float for each color channel.
-    # Examples:
-    # buf = ImageBufAlgo.sub (ImageBuf("a.exr"), ImageBuf("b.exr"))
+    sub_comp = input_b.duplicate()
 
+    ImageBufAlgo.sub(sub_comp, input_a, input_b)
 
-# TODO: not implement yet
-def premult(source_image):
-    """pre-multiply the channels by alpha
+    if sub_comp.has_error:
+        print "Error merging subtracting:", sub_comp.geterror()
 
-    :param source_image:
-    :return:
-    """
-    # bool ImageBufAlgo.premult (dst, src, roi=ROI.All, nthreads=0)
-
-
-# TODO: not implement yet
-def unpremult(source_image):
-    """un-premultiply the channels by alpha
-
-    :param source_image:
-    :return:
-    """
-    # bool ImageBufAlgo.unpremult (dst, src, roi=ROI.All, nthreads=0)
-
-
-# TODO: not implement yet
-def clamp(source_image, min_value, max_value):
-    """clamp the source image's pixel values between given min and max limit.
-
-    :param source_image:
-    :param min_value:
-    :param max_value:
-    :return:
-    """
-    # bool ImageBufAlgo.clamp (dst, src, min, max, bool clampalpha01=False,
-    # roi=ROI.All, nthreads=0)
-    # Copy pixels while clamping between the min and max values. The min and max may
-    # either be tuples (one min and max value per channel), or single floats (same value for
-    # all channels). Additionally, if clampalpha01 is True, then any alpha channel is clamped
-    # to the 0–1 range.
-    # Examples:
-    # OpenImageIO Programmer’s Documentation
-    # 11.9. IMAGEBUFALGO 281
-    # # Clamp image buffer A in-place to the [0,1] range for all channels.
-    # ImageBufAlgo.clamp (A, A, 0.0, 1.0)
+    return sub_comp
