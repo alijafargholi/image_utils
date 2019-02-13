@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Transform &mdash; Image Utils v0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Merge" href="merge.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Image Utils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Quick Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="nodes.html">Nodes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="image.html">Image Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="color.html">Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="merge.html">Merge</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Transform</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.transform.crop">Crop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.transform.crop_by_data_window">Crop by Data Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.transform.resize">Resize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.transform.scale">Scale</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Image Utils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="nodes.html">Nodes</a> &raquo;</li>
+        
+      <li>Transform</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/transform.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="transform">
+<h1>Transform<a class="headerlink" href="#transform" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-image_utils.transform.crop">
+<span id="crop"></span><h2>Crop<a class="headerlink" href="#module-image_utils.transform.crop" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>crop the given image by the given window. begin point is at top-left and</dt>
+<dd>end point is at the lower-right of the image.</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># read an image</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">source_image</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s1">&#39;source.exr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># crop the source image and store it in a new variable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar</span> <span class="o">=</span> <span class="n">crop</span><span class="p">(</span><span class="n">source_image</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">510</span><span class="p">,</span> <span class="mi">510</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># save the cropped image as a new image on disk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;cropped.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">type source_image:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Image</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param source_image:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">source image to crop</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type x1:</th><td class="field-body">int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param x1:</th><td class="field-body">X coordinate of beginning of the crop window</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type y1:</th><td class="field-body">int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param y1:</th><td class="field-body">Y coordinate of beginning of the crop window</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type x2:</th><td class="field-body">int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param x2:</th><td class="field-body">X coordinate of end of the crop window</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type y2:</th><td class="field-body">int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param y2:</th><td class="field-body">Y coordinate of end of the crop window</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">Image</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">cropped image if crop process successful, otherwise source image</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-image_utils.transform.crop_by_data_window">
+<span id="crop-by-data-window"></span><h2>Crop by Data Window<a class="headerlink" href="#module-image_utils.transform.crop_by_data_window" title="Permalink to this headline">¶</a></h2>
+<p>corp the source image to its data window.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">type source_image:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Read</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param source_image:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">source image to crop</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">Read</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">cropped image if crop process successful, otherwise source image</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-image_utils.transform.resize">
+<span id="resize"></span><h2>Resize<a class="headerlink" href="#module-image_utils.transform.resize" title="Permalink to this headline">¶</a></h2>
+<p>resize the given image into the new width and height</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># read an image</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">source_image</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s1">&#39;source.exr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># resize the source image and store it in a new variable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar</span> <span class="o">=</span> <span class="n">resize</span><span class="p">(</span><span class="n">source_image</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># save the resize image as a new image on disk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;resize.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">type source_image:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Image</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param source_image:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">source image to crop</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type width:</th><td class="field-body">int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param width:</th><td class="field-body">width size</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type height:</th><td class="field-body">int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param height:</th><td class="field-body">height size</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">Image</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">resize image if resize process successful, otherwise source image</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-image_utils.transform.scale">
+<span id="scale"></span><h2>Scale<a class="headerlink" href="#module-image_utils.transform.scale" title="Permalink to this headline">¶</a></h2>
+<p>scale the given image iby the scale value.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># read an image</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">source_image</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s1">&#39;source.exr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># scale the source image and store it in a new variable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar</span> <span class="o">=</span> <span class="n">scale</span><span class="p">(</span><span class="n">source_image</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># save the scaled image as a new image on disk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;scaled.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">type source_image:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Image</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param source_image:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">source image to crop</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">type scale_value:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">float</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param scale_value:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">scale value</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">Image</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">scaled image if scale process successful, otherwise source image</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="merge.html" class="btn btn-neutral" title="Merge" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ali Jafargholi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

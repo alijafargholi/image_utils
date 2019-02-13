@@ -23,14 +23,18 @@ from image_utils import extention
 
 
 def constant(width, height, color=(1, 1, 1, 0), data_type=PixelType().float):
-    """create constant image
+    """Create constant image with specific dimension and color
 
-    Example:
+    .. code-block::  python
 
-        >>> from image_utils.image import constant
-        >>> # create a red 5k constant image
-        >>> constant_img = constant(4000, 3000, (1, 0, 0, 0))
-        >>> constant_img.write(r'foo.png')
+       >>> # import the required module
+       >>> from image_utils.image import constant
+
+       >>> # create a red 4k by 3k constant image in red
+       >>> constant_img = constant(4000, 3000, (1, 0, 0, 0))
+
+       >>> # save it as png
+       >>> constant_img.write('foo.png')
 
     :type width: int
     :param width: image width
@@ -57,7 +61,23 @@ def checker(width,
             color_b=(0, 0, 0),
             cells=10,
             data_type=PixelType().float):
-    """create checker image. default is black and white checker color
+    """Create checker image. default is black and white checker color
+
+    .. code-block::  python
+
+       # import the checker module
+       from image_utils.image import checker
+
+       # create a 4k checker, red by blue color, with 10 cells
+       checker_image = checker(4000, 4000, (1, 0, 0), (0, 0, 1), 10)
+       checker_image.write('check_me.png')
+
+    Result
+
+    .. image:: ./_static/images/output_examples/check_me.png
+       :scale: 5%
+       :alt: checker example image
+       :align: center
 
     :type width: int
     :param width: image width
@@ -86,6 +106,24 @@ def checker(width,
 
 
 class Read(ImageBuf):
+    """Read an existing image
+
+    Example:
+
+    .. code-block::  python
+
+       >>> # import the Read module
+       >>> from image_utils.image import Read
+
+       >>> # read an EXR image
+       >>> read_node = Read('input.exr')
+
+       >>> # pre-multiply it by its alpha
+       >>> read_node.premult()
+
+       >>> # save it as tiff
+       >>> read_node.write('output.tif')
+    """
     def __init__(self, image_path='',
                  width=100,
                  height=100,
@@ -95,9 +133,9 @@ class Read(ImageBuf):
         if image_path:
             # make sure the path is correct and it exists
             if not os.path.exists(image_path):
-                self.__image_path = image_path
                 raise UserWarning("Can't locate the input image: "
                                   "{}".format(image_path))
+            self.__image_path = image_path
             super(Read, self).__init__(image_path)
 
         # construct an image with image size
@@ -126,42 +164,76 @@ class Read(ImageBuf):
 
     @property
     def path(self):
+        """Path to the source image
+
+        :rtype: str
+        """
         return self.__image_path
 
     @property
     def data_width(self):
+        """Width of the source image's data window
+
+        :rtype: int
+        """
         return self.__spec.width
 
     @property
     def data_height(self):
+        """Height of the source image's data window
+
+        :rtype: int
+        """
         return self.__spec.height
 
     @property
     def width(self):
-        """image width"""
+        """Image width
+
+        :rtype: int
+        """
         return self.roi_full.width
 
     @property
     def height(self):
-        """image height"""
+        """Image height
+
+        :rtype: int
+        """
         return self.roi_full.height
 
     @property
     def channels(self):
-        """A tuple of strings containing the names of each color channel"""
+        """A tuple of strings containing the names of each color channel
+
+        .. code-block:: python
+
+            >>> # import the checker module
+            >>> from image_utils.image import Read
+
+            >>> read_image = Read('grid-overscan.exr')
+            >>> print(read_image.channels)
+            ... ('R', 'G', 'B', 'A')
+
+        :rtype: tuple
+        :return: list of existing channel
+        """
         return self.__spec.channelnames
 
     @property
     def has_alpha(self):
+        """Whether or not the image has alpha
+
+        :rtype: bool
+        :return: True or False
+        """
         return bool(self.__spec.alpha_channel > 0)
 
     @property
     def file_format(self):
         """Returns the file format of the image"
 
-        Example:
-
-         ::
+        .. code-block:: python
 
             >>> from image_utils import image
             >>> image_node = image.Read('foo.exr')
@@ -174,7 +246,16 @@ class Read(ImageBuf):
 
     @property
     def data_window_coordinate(self):
-        """X and Y coordinate of data window (a.k.a regain of interest)
+        """X and Y coordinate of data window (a.k.a. display window)
+
+        .. code-block:: python
+
+            >>> # import the checker module
+            >>> from image_utils.image import Read
+
+            >>> read_image = Read('grid-overscan.exr')
+            >>> print(read_image.data_window_coordinate)
+            ... (-250, -250, 1250, 1250)
 
         :rtype: tuple
         """
@@ -183,15 +264,24 @@ class Read(ImageBuf):
                 self.xend,
                 self.yend)
 
-    # FIXME: This is currently not working
     def set_data_window(self, x1, y1, x2, y2):
-        """set data window"""
+        """set data window (a.k.a. display window)
+
+        :type x1: int
+        :param x1: x begin
+        :type y1: int
+        :param y1: y begin
+        :type x2: int
+        :param x2: x end
+        :type y2: int
+        :param y2: y end
+        """
         self.set_full(x1, x2, y1, y2, 0, 0)
 
     def duplicate(self, pixel_type=None):
-        """make a exact copy of this image. If a file_format is provided, this will
-           get the specified pixel data type rather than using the same pixel
-           file_format as the source ImageBuf.
+        """make a exact copy of this image. If a file_format is provided, this
+        will get the specified pixel data type rather than using the same pixel
+        file_format as the source ImageBuf.
 
            Example:
 

@@ -1,0 +1,557 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Image Node &mdash; Image Utils v0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Color" href="color.html" />
+    <link rel="prev" title="Nodes" href="nodes.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Image Utils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Quick Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="nodes.html">Nodes</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Image Node</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#read"><cite>Read</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.image.constant"><cite>Constant</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.image.checker"><cite>Checker</cite></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="color.html">Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="merge.html">Merge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform.html">Transform</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Image Utils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="nodes.html">Nodes</a> &raquo;</li>
+        
+      <li>Image Node</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/image.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="image-node">
+<h1>Image Node<a class="headerlink" href="#image-node" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="read">
+<h2><cite>Read</cite><a class="headerlink" href="#read" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="image_utils.image.Read">
+<em class="property">class </em><code class="descclassname">image_utils.image.</code><code class="descname">Read</code><span class="sig-paren">(</span><em>image_path=''</em>, <em>width=100</em>, <em>height=100</em>, <em>channels=4</em>, <em>pixel_type=OpenImageIO.BASETYPE.FLOAT</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_utils/image.html#Read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_utils.image.Read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read an existing image</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># import the Read module</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="kn">import</span> <span class="n">Read</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># read an EXR image</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">read_node</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s1">&#39;input.exr&#39;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># pre-multiply it by its alpha</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">read_node</span><span class="o">.</span><span class="n">premult</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># save it as tiff</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">read_node</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;output.tif&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="image_utils.image.Read.channels">
+<code class="descname">channels</code><a class="headerlink" href="#image_utils.image.Read.channels" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tuple of strings containing the names of each color channel</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># import the checker module</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="kn">import</span> <span class="n">Read</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">read_image</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s1">&#39;grid-overscan.exr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">read_image</span><span class="o">.</span><span class="n">channels</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">(</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of existing channel</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="image_utils.image.Read.data_height">
+<code class="descname">data_height</code><a class="headerlink" href="#image_utils.image.Read.data_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Height of the source image’s data window</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="image_utils.image.Read.data_width">
+<code class="descname">data_width</code><a class="headerlink" href="#image_utils.image.Read.data_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Width of the source image’s data window</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="image_utils.image.Read.data_window_coordinate">
+<code class="descname">data_window_coordinate</code><a class="headerlink" href="#image_utils.image.Read.data_window_coordinate" title="Permalink to this definition">¶</a></dt>
+<dd><p>X and Y coordinate of data window (a.k.a. display window)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># import the checker module</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="kn">import</span> <span class="n">Read</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">read_image</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s1">&#39;grid-overscan.exr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">read_image</span><span class="o">.</span><span class="n">data_window_coordinate</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">(</span><span class="o">-</span><span class="mi">250</span><span class="p">,</span> <span class="o">-</span><span class="mi">250</span><span class="p">,</span> <span class="mi">1250</span><span class="p">,</span> <span class="mi">1250</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="image_utils.image.Read.duplicate">
+<code class="descname">duplicate</code><span class="sig-paren">(</span><em>pixel_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_utils/image.html#Read.duplicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_utils.image.Read.duplicate" title="Permalink to this definition">¶</a></dt>
+<dd><p>make a exact copy of this image. If a file_format is provided, this
+will get the specified pixel data type rather than using the same pixel
+file_format as the source ImageBuf.</p>
+<blockquote>
+<div><p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="k">import</span> <span class="n">Read</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.pixel_type</span> <span class="k">import</span> <span class="n">PixelType</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create an image instance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s1">&#39;foo.exr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># make a copy of it</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">B</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">duplicate</span><span class="p">(</span><span class="n">PixelType</span><span class="p">()</span><span class="o">.</span><span class="n">bit8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Rtype pixel_type:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">OpenImageIO.BASETYPE</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pixel_type</strong> – new image type. i.e, float, half, 8bit</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Image</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">duplicate of this image</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="image_utils.image.Read.file_format">
+<code class="descname">file_format</code><a class="headerlink" href="#image_utils.image.Read.file_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the file format of the image”</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils</span> <span class="kn">import</span> <span class="n">image</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_node</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s1">&#39;foo.exr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">image_node</span><span class="o">.</span><span class="n">file_format</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">openexr</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="image_utils.image.Read.has_alpha">
+<code class="descname">has_alpha</code><a class="headerlink" href="#image_utils.image.Read.has_alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether or not the image has alpha</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True or False</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="image_utils.image.Read.height">
+<code class="descname">height</code><a class="headerlink" href="#image_utils.image.Read.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Image height</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="image_utils.image.Read.path">
+<code class="descname">path</code><a class="headerlink" href="#image_utils.image.Read.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Path to the source image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="image_utils.image.Read.premult">
+<code class="descname">premult</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_utils/image.html#Read.premult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_utils.image.Read.premult" title="Permalink to this definition">¶</a></dt>
+<dd><p>pre-multiply the channels by alpha</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="image_utils.image.Read.set_data_window">
+<code class="descname">set_data_window</code><span class="sig-paren">(</span><em>x1</em>, <em>y1</em>, <em>x2</em>, <em>y2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_utils/image.html#Read.set_data_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_utils.image.Read.set_data_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>set data window (a.k.a. display window)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – x begin</li>
+<li><strong>y1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – y begin</li>
+<li><strong>x2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – x end</li>
+<li><strong>y2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – y end</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="image_utils.image.Read.unpremult">
+<code class="descname">unpremult</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_utils/image.html#Read.unpremult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_utils.image.Read.unpremult" title="Permalink to this definition">¶</a></dt>
+<dd><p>un-premultiply the channels by alpha</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="image_utils.image.Read.width">
+<code class="descname">width</code><a class="headerlink" href="#image_utils.image.Read.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Image width</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-image_utils.image.constant">
+<span id="constant"></span><h2><cite>Constant</cite><a class="headerlink" href="#module-image_utils.image.constant" title="Permalink to this headline">¶</a></h2>
+<p>Create constant image with specific dimension and color</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># import the required module</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="kn">import</span> <span class="n">constant</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a red 4k by 3k constant image in red</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">constant_img</span> <span class="o">=</span> <span class="n">constant</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># save it as png</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">constant_img</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;foo.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">type width:</th><td class="field-body">int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param width:</th><td class="field-body">image width</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type height:</th><td class="field-body">int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param height:</th><td class="field-body">image height</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type color:</th><td class="field-body">tuple</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param color:</th><td class="field-body">rgba color</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type data_type:</th><td class="field-body">OpenImageIO.BASETYPE</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param data_type:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">type of image</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">OpenImageIO.ImageBuf</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">constant image</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-image_utils.image.checker">
+<span id="checker"></span><h2><cite>Checker</cite><a class="headerlink" href="#module-image_utils.image.checker" title="Permalink to this headline">¶</a></h2>
+<p>Create checker image. default is black and white checker color</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the checker module</span>
+<span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="kn">import</span> <span class="n">checker</span>
+
+<span class="c1"># create a 4k checker, red by blue color, with 10 cells</span>
+<span class="n">checker_image</span> <span class="o">=</span> <span class="n">checker</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="mi">4000</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">checker_image</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;check_me.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Result</p>
+<a class="reference internal image-reference" href="_images/check_me.png"><img alt="checker example image" class="align-center" src="_images/check_me.png" style="width: 200.0px; height: 200.0px;" /></a>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">type width:</th><td class="field-body">int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param width:</th><td class="field-body">image width</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type height:</th><td class="field-body">int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param height:</th><td class="field-body">image height</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type color_a:</th><td class="field-body">tuple</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param color_a:</th><td class="field-body">color A</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type color_b:</th><td class="field-body">tuple</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param color_b:</th><td class="field-body">color B</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type cells:</th><td class="field-body">int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param cells:</th><td class="field-body">number of cell rows</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type data_type:</th><td class="field-body">OpenImageIO.BASETYPE</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param data_type:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">type of image</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">OpenImageIO.ImageBuf</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">checker image</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="color.html" class="btn btn-neutral float-right" title="Color" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="nodes.html" class="btn btn-neutral" title="Nodes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ali Jafargholi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

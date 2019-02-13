@@ -1,0 +1,515 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>image_utils.image &mdash; Image Utils v0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Image Utils
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Quick Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nodes.html">Nodes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Image Utils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>image_utils.image</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for image_utils.image</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">============</span>
+<span class="sd">Read Node</span>
+<span class="sd">============</span>
+
+<span class="sd">- **Read**:</span>
+<span class="sd">- **Constant**:</span>
+<span class="sd">- **Checker**:</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Read&#39;</span><span class="p">,</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="s1">&#39;checker&#39;</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">OpenImageIO</span> <span class="k">as</span> <span class="nn">OIIO</span>
+<span class="kn">from</span> <span class="nn">OpenImageIO</span> <span class="k">import</span> <span class="n">ImageBuf</span>
+<span class="kn">from</span> <span class="nn">OpenImageIO</span> <span class="k">import</span> <span class="n">ImageSpec</span>
+<span class="kn">from</span> <span class="nn">OpenImageIO</span> <span class="k">import</span> <span class="n">ImageBufAlgo</span>
+
+<span class="kn">from</span> <span class="nn">image_utils.pixel_type</span> <span class="k">import</span> <span class="n">PixelType</span>
+
+<span class="kn">from</span> <span class="nn">image_utils</span> <span class="k">import</span> <span class="n">extention</span>
+
+
+<span class="k">def</span> <span class="nf">constant</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">data_type</span><span class="o">=</span><span class="n">PixelType</span><span class="p">()</span><span class="o">.</span><span class="n">float</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create constant image with specific dimension and color</span>
+
+<span class="sd">    .. code-block::  python</span>
+
+<span class="sd">       &gt;&gt;&gt; # import the required module</span>
+<span class="sd">       &gt;&gt;&gt; from image_utils.image import constant</span>
+
+<span class="sd">       &gt;&gt;&gt; # create a red 4k by 3k constant image in red</span>
+<span class="sd">       &gt;&gt;&gt; constant_img = constant(4000, 3000, (1, 0, 0, 0))</span>
+
+<span class="sd">       &gt;&gt;&gt; # save it as png</span>
+<span class="sd">       &gt;&gt;&gt; constant_img.write(&#39;foo.png&#39;)</span>
+
+<span class="sd">    :type width: int</span>
+<span class="sd">    :param width: image width</span>
+<span class="sd">    :type height: int</span>
+<span class="sd">    :param height: image height</span>
+<span class="sd">    :type color: tuple</span>
+<span class="sd">    :param color: rgba color</span>
+<span class="sd">    :type data_type: OpenImageIO.BASETYPE</span>
+<span class="sd">    :param data_type: type of image</span>
+<span class="sd">    :rtype: OpenImageIO.ImageBuf</span>
+<span class="sd">    :return: constant image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">constant_image</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+                          <span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span>
+                          <span class="n">channels</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                          <span class="n">pixel_type</span><span class="o">=</span><span class="n">data_type</span><span class="p">)</span>
+    <span class="n">ImageBufAlgo</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">constant_image</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">constant_image</span><span class="o">.</span><span class="n">roi_full</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">constant_image</span>
+
+
+<span class="k">def</span> <span class="nf">checker</span><span class="p">(</span><span class="n">width</span><span class="p">,</span>
+            <span class="n">height</span><span class="p">,</span>
+            <span class="n">color_a</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">color_b</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="n">cells</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">data_type</span><span class="o">=</span><span class="n">PixelType</span><span class="p">()</span><span class="o">.</span><span class="n">float</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create checker image. default is black and white checker color</span>
+
+<span class="sd">    .. code-block::  python</span>
+
+<span class="sd">       # import the checker module</span>
+<span class="sd">       from image_utils.image import checker</span>
+
+<span class="sd">       # create a 4k checker, red by blue color, with 10 cells</span>
+<span class="sd">       checker_image = checker(4000, 4000, (1, 0, 0), (0, 0, 1), 10)</span>
+<span class="sd">       checker_image.write(&#39;check_me.png&#39;)</span>
+
+<span class="sd">    Result</span>
+
+<span class="sd">    .. image:: ./_static/images/output_examples/check_me.png</span>
+<span class="sd">       :scale: 5%</span>
+<span class="sd">       :alt: checker example image</span>
+<span class="sd">       :align: center</span>
+
+<span class="sd">    :type width: int</span>
+<span class="sd">    :param width: image width</span>
+<span class="sd">    :type height: int</span>
+<span class="sd">    :param height: image height</span>
+<span class="sd">    :type color_a: tuple</span>
+<span class="sd">    :param color_a: color A</span>
+<span class="sd">    :type color_b: tuple</span>
+<span class="sd">    :param color_b: color B</span>
+<span class="sd">    :type cells: int</span>
+<span class="sd">    :param cells: number of cell rows</span>
+<span class="sd">    :type data_type: OpenImageIO.BASETYPE</span>
+<span class="sd">    :param data_type: type of image</span>
+<span class="sd">    :rtype: OpenImageIO.ImageBuf</span>
+<span class="sd">    :return: checker image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">checker_image</span> <span class="o">=</span> <span class="n">ImageBuf</span><span class="p">(</span><span class="n">ImageSpec</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">data_type</span><span class="p">))</span>
+    <span class="n">ImageBufAlgo</span><span class="o">.</span><span class="n">checker</span><span class="p">(</span><span class="n">checker_image</span><span class="p">,</span>
+                         <span class="n">width</span> <span class="o">/</span> <span class="n">cells</span><span class="p">,</span>
+                         <span class="n">height</span> <span class="o">/</span> <span class="n">cells</span><span class="p">,</span>
+                         <span class="mi">1</span><span class="p">,</span>
+                         <span class="n">color_a</span><span class="p">,</span>
+                         <span class="n">color_b</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">checker_image</span>
+
+
+<div class="viewcode-block" id="Read"><a class="viewcode-back" href="../../image.html#image_utils.image.Read">[docs]</a><span class="k">class</span> <span class="nc">Read</span><span class="p">(</span><span class="n">ImageBuf</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Read an existing image</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. code-block::  python</span>
+
+<span class="sd">       &gt;&gt;&gt; # import the Read module</span>
+<span class="sd">       &gt;&gt;&gt; from image_utils.image import Read</span>
+
+<span class="sd">       &gt;&gt;&gt; # read an EXR image</span>
+<span class="sd">       &gt;&gt;&gt; read_node = Read(&#39;input.exr&#39;)</span>
+
+<span class="sd">       &gt;&gt;&gt; # pre-multiply it by its alpha</span>
+<span class="sd">       &gt;&gt;&gt; read_node.premult()</span>
+
+<span class="sd">       &gt;&gt;&gt; # save it as tiff</span>
+<span class="sd">       &gt;&gt;&gt; read_node.write(&#39;output.tif&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                 <span class="n">width</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                 <span class="n">height</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                 <span class="n">channels</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                 <span class="n">pixel_type</span><span class="o">=</span><span class="n">PixelType</span><span class="p">()</span><span class="o">.</span><span class="n">float</span><span class="p">):</span>
+        <span class="c1"># construct an image with image path</span>
+        <span class="k">if</span> <span class="n">image_path</span><span class="p">:</span>
+            <span class="c1"># make sure the path is correct and it exists</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">image_path</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">UserWarning</span><span class="p">(</span><span class="s2">&quot;Can&#39;t locate the input image: &quot;</span>
+                                  <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">image_path</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__image_path</span> <span class="o">=</span> <span class="n">image_path</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">Read</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
+
+        <span class="c1"># construct an image with image size</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_spec</span> <span class="o">=</span> <span class="n">OIIO</span><span class="o">.</span><span class="n">ImageSpec</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">channels</span><span class="p">,</span> <span class="n">pixel_type</span><span class="p">)</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">Read</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">new_spec</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spec</span><span class="p">()</span>
+
+        <span class="c1"># add file format specific attributes</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_format</span><span class="p">:</span>
+            <span class="n">attribute_data</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">extention</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_format</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attribute_data</span><span class="p">:</span>
+                <span class="n">image_extension_attr</span> <span class="o">=</span> <span class="n">attribute_data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">attr_value</span> <span class="ow">in</span> <span class="n">image_extension_attr</span><span class="p">:</span>
+                    <span class="n">image_attr_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spec</span><span class="p">()</span><span class="o">.</span><span class="n">getattribute</span><span class="p">(</span><span class="n">attr_value</span><span class="p">)</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">image_attr_value</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Read.premult"><a class="viewcode-back" href="../../image.html#image_utils.image.Read.premult">[docs]</a>    <span class="k">def</span> <span class="nf">premult</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;pre-multiply the channels by alpha&quot;&quot;&quot;</span>
+        <span class="n">ImageBufAlgo</span><span class="o">.</span><span class="n">premult</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Read.unpremult"><a class="viewcode-back" href="../../image.html#image_utils.image.Read.unpremult">[docs]</a>    <span class="k">def</span> <span class="nf">unpremult</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;un-premultiply the channels by alpha&quot;&quot;&quot;</span>
+        <span class="n">ImageBufAlgo</span><span class="o">.</span><span class="n">unpremult</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Path to the source image</span>
+
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__image_path</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">data_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Width of the source image&#39;s data window</span>
+
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__spec</span><span class="o">.</span><span class="n">width</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">data_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Height of the source image&#39;s data window</span>
+
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__spec</span><span class="o">.</span><span class="n">height</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Image width</span>
+
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">roi_full</span><span class="o">.</span><span class="n">width</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Image height</span>
+
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">roi_full</span><span class="o">.</span><span class="n">height</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">channels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A tuple of strings containing the names of each color channel</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            &gt;&gt;&gt; # import the checker module</span>
+<span class="sd">            &gt;&gt;&gt; from image_utils.image import Read</span>
+
+<span class="sd">            &gt;&gt;&gt; read_image = Read(&#39;grid-overscan.exr&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(read_image.channels)</span>
+<span class="sd">            ... (&#39;R&#39;, &#39;G&#39;, &#39;B&#39;, &#39;A&#39;)</span>
+
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        :return: list of existing channel</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__spec</span><span class="o">.</span><span class="n">channelnames</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">has_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Whether or not the image has alpha</span>
+
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        :return: True or False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__spec</span><span class="o">.</span><span class="n">alpha_channel</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">file_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the file format of the image&quot;</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            &gt;&gt;&gt; from image_utils import image</span>
+<span class="sd">            &gt;&gt;&gt; image_node = image.Read(&#39;foo.exr&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(image_node.file_format)</span>
+<span class="sd">            ... openexr</span>
+
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_format_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">data_window_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;X and Y coordinate of data window (a.k.a. display window)</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            &gt;&gt;&gt; # import the checker module</span>
+<span class="sd">            &gt;&gt;&gt; from image_utils.image import Read</span>
+
+<span class="sd">            &gt;&gt;&gt; read_image = Read(&#39;grid-overscan.exr&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(read_image.data_window_coordinate)</span>
+<span class="sd">            ... (-250, -250, 1250, 1250)</span>
+
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xbegin</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ybegin</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">xend</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">yend</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Read.set_data_window"><a class="viewcode-back" href="../../image.html#image_utils.image.Read.set_data_window">[docs]</a>    <span class="k">def</span> <span class="nf">set_data_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set data window (a.k.a. display window)</span>
+
+<span class="sd">        :type x1: int</span>
+<span class="sd">        :param x1: x begin</span>
+<span class="sd">        :type y1: int</span>
+<span class="sd">        :param y1: y begin</span>
+<span class="sd">        :type x2: int</span>
+<span class="sd">        :param x2: x end</span>
+<span class="sd">        :type y2: int</span>
+<span class="sd">        :param y2: y end</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_full</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Read.duplicate"><a class="viewcode-back" href="../../image.html#image_utils.image.Read.duplicate">[docs]</a>    <span class="k">def</span> <span class="nf">duplicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixel_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;make a exact copy of this image. If a file_format is provided, this</span>
+<span class="sd">        will get the specified pixel data type rather than using the same pixel</span>
+<span class="sd">        file_format as the source ImageBuf.</span>
+
+<span class="sd">           Example:</span>
+
+<span class="sd">                &gt;&gt;&gt; from image_utils.image import Read</span>
+<span class="sd">                &gt;&gt;&gt; from image_utils.pixel_type import PixelType</span>
+<span class="sd">                &gt;&gt;&gt; # create an image instance</span>
+<span class="sd">                &gt;&gt;&gt; A = Read(&#39;foo.exr&#39;)</span>
+<span class="sd">                &gt;&gt;&gt; # make a copy of it</span>
+<span class="sd">                &gt;&gt;&gt; B = A.duplicate(PixelType().bit8)</span>
+
+<span class="sd">        :rtype pixel_type: OpenImageIO.BASETYPE</span>
+<span class="sd">        :param pixel_type: new image type. i.e, float, half, 8bit</span>
+<span class="sd">        :rtype: Image</span>
+<span class="sd">        :return: duplicate of this image</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># use the same pixel type as the source image if not specified</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">pixel_type</span><span class="p">:</span>
+            <span class="n">pixel_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixeltype</span>
+
+        <span class="c1"># Create an empty image with the same specs as the source image</span>
+        <span class="n">copy_image</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span>
+                          <span class="n">height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">,</span>
+                          <span class="n">channels</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">),</span>
+                          <span class="n">pixel_type</span><span class="o">=</span><span class="n">pixel_type</span><span class="p">)</span>
+
+        <span class="n">copy_image</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixel_type</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">copy_image</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="vm">__doc__</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ali Jafargholi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

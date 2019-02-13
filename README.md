@@ -7,6 +7,10 @@ The idea behind this utility module is to mimic the basic [Nuke](https://www.fou
 feature via `python`. This library uses `OpenImageIO` at its core and utilizes 
 its API features 
 
+## Documentation
+
+For more info, please visit the [documentation page](https://alijafargholi.github.io/image_utils/)
+
 ## Getting Started
 
 ``` python
