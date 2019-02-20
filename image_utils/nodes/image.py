@@ -8,7 +8,7 @@ Read Node
 - **Checker**:
 """
 from __future__ import print_function
-__all__ = ['Read', 'constant', 'checker']
+# __all__ = ['Read', 'constant', 'checker']
 
 import os
 
@@ -18,6 +18,7 @@ from OpenImageIO import ImageSpec
 from OpenImageIO import ImageBufAlgo
 
 from image_utils.pixel_type import PixelType
+from image_utils.nodes import merge
 
 from image_utils import extention
 
@@ -28,13 +29,13 @@ def constant(width, height, color=(1, 1, 1, 0), data_type=PixelType().float):
     .. code-block::  python
 
        >>> # import the required module
-       >>> from image_utils.image import constant
+       >>> from image_utils.nodes import image
 
        >>> # create a red 4k by 3k constant image in red
-       >>> constant_img = constant(4000, 3000, (1, 0, 0, 0))
+       >>> constant_image = image.constant(4000, 3000, (1, 0, 0, 0))
 
        >>> # save it as png
-       >>> constant_img.write('foo.png')
+       >>> constant_image.write('foo.png')
 
     :type width: int
     :param width: image width
@@ -65,12 +66,12 @@ def checker(width,
 
     .. code-block::  python
 
-       # import the checker module
-       from image_utils.image import checker
+       >>> # import the checker module
+       >>> from image_utils.nodes import image
 
-       # create a 4k checker, red by blue color, with 10 cells
-       checker_image = checker(4000, 4000, (1, 0, 0), (0, 0, 1), 10)
-       checker_image.write('check_me.png')
+       >>> # create a 4k checker, red by blue color, with 10 cells
+       >>> checker_image = image.checker(4000, 4000, (1, 0, 0), (0, 0, 1), 10)
+       >>> checker_image.write('check_me.png')
 
     Result
 
@@ -113,10 +114,10 @@ class Read(ImageBuf):
     .. code-block::  python
 
        >>> # import the Read module
-       >>> from image_utils.image import Read
+       >>> from image_utils.nodes import image
 
        >>> # read an EXR image
-       >>> read_node = Read('input.exr')
+       >>> read_node = image.Read('input.exr')
 
        >>> # pre-multiply it by its alpha
        >>> read_node.premult()
@@ -153,6 +154,24 @@ class Read(ImageBuf):
                 for attr_name, attr_value in image_extension_attr:
                     image_attr_value = self.spec().getattribute(attr_value)
                     setattr(self, attr_name, image_attr_value)
+
+    def __repr__(self):
+        return "Image Read node from {}".format(self.path)
+
+    def __str__(self):
+        return "image_utils.nodes.image.Read({})".format(self.path)
+
+    def __add__(self, other):
+        """Merge with the input image using the 'add' function
+
+        :type other: Read
+        :param other: secondary image to add to this image
+        :rtype: Read
+        :return: the image as a result of the add process
+        """
+        print(type(other))
+        # merge.add(self, other)
+        # raise NotImplementedError("This method is not implemented!")
 
     def premult(self):
         """pre-multiply the channels by alpha"""
@@ -209,9 +228,9 @@ class Read(ImageBuf):
         .. code-block:: python
 
             >>> # import the checker module
-            >>> from image_utils.image import Read
+            >>> from image_utils.nodes import image
 
-            >>> read_image = Read('grid-overscan.exr')
+            >>> read_image = image.Read('grid-overscan.exr')
             >>> print(read_image.channels)
             ... ('R', 'G', 'B', 'A')
 
@@ -235,7 +254,7 @@ class Read(ImageBuf):
 
         .. code-block:: python
 
-            >>> from image_utils import image
+            >>> from image_utils.nodes import image
             >>> image_node = image.Read('foo.exr')
             >>> print(image_node.file_format)
             ... openexr
@@ -251,11 +270,15 @@ class Read(ImageBuf):
         .. code-block:: python
 
             >>> # import the checker module
-            >>> from image_utils.image import Read
+            >>> from image_utils.nodes import image
 
-            >>> read_image = Read('grid-overscan.exr')
+            >>> read_image = image.Read('grid-overscan.exr')
             >>> print(read_image.data_window_coordinate)
             ... (-250, -250, 1250, 1250)
+
+        .. image:: ./_static/images/output_examples/grid_overscan_exr.png
+           :scale: 30
+           :align: center
 
         :rtype: tuple
         """
@@ -285,10 +308,10 @@ class Read(ImageBuf):
 
            Example:
 
-                >>> from image_utils.image import Read
+                >>> from image_utils.nodes import image
                 >>> from image_utils.pixel_type import PixelType
                 >>> # create an image instance
-                >>> A = Read('foo.exr')
+                >>> A = image.Read('foo.exr')
                 >>> # make a copy of it
                 >>> B = A.duplicate(PixelType().bit8)
 

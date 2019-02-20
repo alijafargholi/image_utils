@@ -11,20 +11,18 @@ from __future__ import print_function
 
 from OpenImageIO import ImageBufAlgo
 
-from image_utils.image import Read
+from image_utils.nodes.image import Read
 
 
 def clamp(input_image, min_value, max_value, clamp_alpha=False):
     """clamp the source image's pixel values between given min and max limit.
 
-    Example:
+    .. code-block:: python
 
-    ..
-
-       >>> from image_utils.image import Read
-       >>> from image_utils.color import clamp
-       >>> source_image = Read("source.exr")
-       >>> clamped_image = clamp(source_image, 0.1, 1.0)
+       >>> from image_utils.nodes import image
+       >>> from image_utils.nodes import color
+       >>> source_image = image.Read("source.exr")
+       >>> clamped_image = color.clamp(source_image, 0.1, 1.0)
        >>> clamped_image.write("result.exr")
 
     :type input_image: Read
@@ -54,8 +52,11 @@ def clamp(input_image, min_value, max_value, clamp_alpha=False):
 def set_color_look(input_image, look):
     """apply an OpenColorIo "look" transform to the pixels
 
-    :param source_image:
+    :type input_image:
+    :param input_image:
+    :type look:
     :param look:
+    :rtype:
     :return:
     """
     # bool ImageBufAlgo.ociolook (dst, src, looks, from, to,
@@ -67,13 +68,16 @@ def set_color_look(input_image, look):
     # Src = ImageBuf ("tahoe.jpg")
     # Dst = ImageBufAlgo.ociolook (Src, "look", "vd8", "lnf",
     # context_key="SHOT", context_value="pe0012")
+    raise NotImplementedError('This module is not implemented yet!')
 
 
 # TODO: not implement yet
 def set_color_display(input_image, display):
     """apply an OpenColorIo "display" transform to the pixels
 
-    :param source_image:
+    :type input_image:
+    :param input_image:
+    :type display:
     :param display:
     :return:
     """
@@ -86,6 +90,7 @@ def set_color_display(input_image, display):
     # Src = ImageBuf ("tahoe.exr")
     # Dst = ImageBufAlgo.ociodisplay (Src, "sRGB", "Film", "lnf",
     # context_key="SHOT", context_value="pe0012")
+    raise NotImplementedError('This module is not implemented yet!')
 
 
 def gamma(input_image, gamma_r, gamma_g=None, gamma_b=None, gamma_a=1.0):
@@ -94,15 +99,19 @@ def gamma(input_image, gamma_r, gamma_g=None, gamma_b=None, gamma_a=1.0):
     .. note: if only gamma value for red channel is provided, it'll be used for
              green and blue channel
 
-    Example:
+    .. code-block:: python
 
-    ..
+       >>> from image_utils.nodes import image
+       >>> from image_utils.nodes import color
+       >>> source_image = image.Read("source.tif")
+       >>> color.gamma(source_image, 0.45)
+       >>> source_image.write("result.png")
 
-       >>> from image_utils.image import Read
-       >>> from image_utils.color import gamma
-       >>> source_image = Read("source.exr")
-       >>> gamma_corrected = gamma(source_image, 2.2)
-       >>> gamma_corrected.write("result.exr")
+    ============================================================= =============================================================
+    Source                                                        Applied Gamma
+    ============================================================= =============================================================
+    .. image:: ./_static/images/output_examples/original_grid.png     .. image:: ./_static/images/output_examples/gammaed_2.png
+    ============================================================= =============================================================
 
     :type input_image: Read
     :param input_image: input image to be gamma corrected
@@ -117,16 +126,19 @@ def gamma(input_image, gamma_r, gamma_g=None, gamma_b=None, gamma_a=1.0):
     :rtype: Read
     :return: gamma corrected image
     """
+    #
     if not gamma_g:
         gamma_g = gamma_r
     if not gamma_b:
         gamma_b = gamma_r
 
-    result = input_image.duplicate()
+    ImageBufAlgo.pow(
+        input_image,
+        input_image,
+        ((1.0/gamma_r), (1.0/gamma_g), (1.0/gamma_b), gamma_a)
+    )
 
-    ImageBufAlgo.pow(result, input_image, (gamma_r, gamma_g, gamma_b, gamma_a))
+    if input_image.has_error:
+        print("Error gamma:", input_image.geterror())
 
-    if result.has_error:
-        print("Error gamma:", result.geterror())
-
-    return result
+    return input_image

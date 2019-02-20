@@ -10,21 +10,17 @@ Merge Node
 """
 from OpenImageIO import ImageBufAlgo
 
-from image_utils.image import Read
-
 
 def over(input_a, input_b):
     """composite *(merge)* input A over input B
 
-    Example:
+    .. code-block: python
 
-    ..
-
-       >>> from image_utils.image import Read
-       >>> from image_utils.merge import over
-       >>> foreground_image = Read("fg.exr")
-       >>> background_image = Read("bg.exr")
-       >>> merged_image = over(foreground_image, background_image)
+       >>> from image_utils.nodes import image
+       >>> from image_utils.nodes import merge
+       >>> foreground_image = image.Read("fg.exr")
+       >>> background_image = image.Read("bg.exr")
+       >>> merged_image = merge.over(foreground_image, background_image)
        >>> merged_image.write("result.exr")
 
     :type input_a: Read
@@ -49,20 +45,18 @@ def zover(input_a, input_b):
     """composite input A and input B using their respective Z channels to
        decide which is in front on a pixel-by-pixel basis.
 
-    Example:
+    .. code-block:: python
 
-    ..
-
-       >>> from image_utils.image import Read
-       >>> from image_utils.merge import zover
-       >>> image_a = Read("A.exr")
-       >>> image_b = Read("B.exr")
-       >>> z_merged_image = over(image_a, image_b)
+       >>> from image_utils.nodes import image
+       >>> from image_utils.nodes import merge
+       >>> image_a = image.Read("A.exr")
+       >>> image_b = image.Read("B.exr")
+       >>> z_merged_image = merge.over(image_a, image_b)
        >>> z_merged_image.write("result.exr")
 
     :type input_a: Read
     :param input_a: foreground image
-    :type input_b: Read
+    :type input_b: :ref:`Read <read-node>`
     :param input_b: background image
     :rtype: Read
     :return: merged read object
@@ -84,11 +78,11 @@ def add(input_a, input_b):
 
     ..
 
-       >>> from image_utils.image import Read
-       >>> from image_utils.merge import add
-       >>> input_a = Read("image_a.exr")
-       >>> input_b = Read("image_b.exr")
-       >>> add_image = add(input_a, input_b)
+       >>> from image_utils.nodes import image
+       >>> from image_utils.nodes import merge
+       >>> input_a = image.Read("image_a.exr")
+       >>> input_b = image.Read("image_b.exr")
+       >>> add_image = merge.add(input_a, input_b)
        >>> add_image.write("result.exr")
 
     :type input_a: Read
@@ -111,15 +105,13 @@ def add(input_a, input_b):
 def sub(input_a, input_b):
     """subtract input A from input B.
 
-    Example:
+    .. code-block:: python
 
-    ..
-
-       >>> from image_utils.image import Read
-       >>> from image_utils.merge import sub
-       >>> input_a = Read("image_a.exr")
-       >>> input_b = Read("image_b.exr")
-       >>> sub_image = sub(input_a, input_b)
+       >>> from image_utils.nodes import image
+       >>> from image_utils.nodes import merge
+       >>> input_a = image.Read("image_a.exr")
+       >>> input_b = image.Read("image_b.exr")
+       >>> sub_image = merge.sub(input_a, input_b)
        >>> sub_image.write("result.exr")
 
     :type input_a: Read

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Image Node &mdash; Image Utils v0.1 documentation</title>
+  <title>Image &mdash; Image Utils v0.1 documentation</title>
   
 
   
@@ -83,10 +83,10 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Quick Examples</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="nodes.html">Nodes</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Image Node</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Image</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#read"><cite>Read</cite></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.image.constant"><cite>Constant</cite></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.image.checker"><cite>Checker</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.nodes.image.constant"><cite>Constant</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.nodes.image.checker"><cite>Checker</cite></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="color.html">Color</a></li>
@@ -141,7 +141,7 @@
         
           <li><a href="nodes.html">Nodes</a> &raquo;</li>
         
-      <li>Image Node</li>
+      <li>Image</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -160,20 +160,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="image-node">
-<h1>Image Node<a class="headerlink" href="#image-node" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="image">
+<h1>Image<a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="read">
-<h2><cite>Read</cite><a class="headerlink" href="#read" title="Permalink to this headline">¶</a></h2>
+<span id="read-node"></span><h2><cite>Read</cite><a class="headerlink" href="#read" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="image_utils.image.Read">
-<em class="property">class </em><code class="descclassname">image_utils.image.</code><code class="descname">Read</code><span class="sig-paren">(</span><em>image_path=''</em>, <em>width=100</em>, <em>height=100</em>, <em>channels=4</em>, <em>pixel_type=OpenImageIO.BASETYPE.FLOAT</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_utils/image.html#Read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_utils.image.Read" title="Permalink to this definition">¶</a></dt>
+<dt id="image_utils.nodes.image.Read">
+<em class="property">class </em><code class="descclassname">image_utils.nodes.image.</code><code class="descname">Read</code><span class="sig-paren">(</span><em>image_path=''</em>, <em>width=100</em>, <em>height=100</em>, <em>channels=4</em>, <em>pixel_type=OpenImageIO.BASETYPE.FLOAT</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_utils/nodes/image.html#Read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_utils.nodes.image.Read" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read an existing image</p>
 <p>Example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># import the Read module</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="kn">import</span> <span class="n">Read</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="kn">import</span> <span class="n">image</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># read an EXR image</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">read_node</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s1">&#39;input.exr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">read_node</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s1">&#39;input.exr&#39;</span><span class="p">)</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># pre-multiply it by its alpha</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">read_node</span><span class="o">.</span><span class="n">premult</span><span class="p">()</span>
@@ -183,13 +183,13 @@
 </pre></div>
 </div>
 <dl class="attribute">
-<dt id="image_utils.image.Read.channels">
-<code class="descname">channels</code><a class="headerlink" href="#image_utils.image.Read.channels" title="Permalink to this definition">¶</a></dt>
+<dt id="image_utils.nodes.image.Read.channels">
+<code class="descname">channels</code><a class="headerlink" href="#image_utils.nodes.image.Read.channels" title="Permalink to this definition">¶</a></dt>
 <dd><p>A tuple of strings containing the names of each color channel</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># import the checker module</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="kn">import</span> <span class="n">Read</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="kn">import</span> <span class="n">image</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">read_image</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s1">&#39;grid-overscan.exr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">read_image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s1">&#39;grid-overscan.exr&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">read_image</span><span class="o">.</span><span class="n">channels</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">(</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)</span>
 </pre></div>
@@ -207,8 +207,8 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="image_utils.image.Read.data_height">
-<code class="descname">data_height</code><a class="headerlink" href="#image_utils.image.Read.data_height" title="Permalink to this definition">¶</a></dt>
+<dt id="image_utils.nodes.image.Read.data_height">
+<code class="descname">data_height</code><a class="headerlink" href="#image_utils.nodes.image.Read.data_height" title="Permalink to this definition">¶</a></dt>
 <dd><p>Height of the source image’s data window</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -221,8 +221,8 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="image_utils.image.Read.data_width">
-<code class="descname">data_width</code><a class="headerlink" href="#image_utils.image.Read.data_width" title="Permalink to this definition">¶</a></dt>
+<dt id="image_utils.nodes.image.Read.data_width">
+<code class="descname">data_width</code><a class="headerlink" href="#image_utils.nodes.image.Read.data_width" title="Permalink to this definition">¶</a></dt>
 <dd><p>Width of the source image’s data window</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -235,17 +235,18 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="image_utils.image.Read.data_window_coordinate">
-<code class="descname">data_window_coordinate</code><a class="headerlink" href="#image_utils.image.Read.data_window_coordinate" title="Permalink to this definition">¶</a></dt>
+<dt id="image_utils.nodes.image.Read.data_window_coordinate">
+<code class="descname">data_window_coordinate</code><a class="headerlink" href="#image_utils.nodes.image.Read.data_window_coordinate" title="Permalink to this definition">¶</a></dt>
 <dd><p>X and Y coordinate of data window (a.k.a. display window)</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># import the checker module</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="kn">import</span> <span class="n">Read</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="kn">import</span> <span class="n">image</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">read_image</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s1">&#39;grid-overscan.exr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">read_image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s1">&#39;grid-overscan.exr&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">read_image</span><span class="o">.</span><span class="n">data_window_coordinate</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">(</span><span class="o">-</span><span class="mi">250</span><span class="p">,</span> <span class="o">-</span><span class="mi">250</span><span class="p">,</span> <span class="mi">1250</span><span class="p">,</span> <span class="mi">1250</span><span class="p">)</span>
 </pre></div>
 </div>
+<a class="reference internal image-reference" href="_images/grid_overscan_exr.png"><img alt="_images/grid_overscan_exr.png" class="align-center" src="_images/grid_overscan_exr.png" style="width: 415.8px; height: 370.2px;" /></a>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -257,17 +258,17 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="image_utils.image.Read.duplicate">
-<code class="descname">duplicate</code><span class="sig-paren">(</span><em>pixel_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_utils/image.html#Read.duplicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_utils.image.Read.duplicate" title="Permalink to this definition">¶</a></dt>
+<dt id="image_utils.nodes.image.Read.duplicate">
+<code class="descname">duplicate</code><span class="sig-paren">(</span><em>pixel_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_utils/nodes/image.html#Read.duplicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_utils.nodes.image.Read.duplicate" title="Permalink to this definition">¶</a></dt>
 <dd><p>make a exact copy of this image. If a file_format is provided, this
 will get the specified pixel data type rather than using the same pixel
 file_format as the source ImageBuf.</p>
 <blockquote>
 <div><p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="k">import</span> <span class="n">Read</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="k">import</span> <span class="n">image</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.pixel_type</span> <span class="k">import</span> <span class="n">PixelType</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># create an image instance</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s1">&#39;foo.exr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s1">&#39;foo.exr&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># make a copy of it</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">B</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">duplicate</span><span class="p">(</span><span class="n">PixelType</span><span class="p">()</span><span class="o">.</span><span class="n">bit8</span><span class="p">)</span>
 </pre></div>
@@ -291,10 +292,10 @@ file_format as the source ImageBuf.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="image_utils.image.Read.file_format">
-<code class="descname">file_format</code><a class="headerlink" href="#image_utils.image.Read.file_format" title="Permalink to this definition">¶</a></dt>
+<dt id="image_utils.nodes.image.Read.file_format">
+<code class="descname">file_format</code><a class="headerlink" href="#image_utils.nodes.image.Read.file_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the file format of the image”</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils</span> <span class="kn">import</span> <span class="n">image</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="kn">import</span> <span class="n">image</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">image_node</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s1">&#39;foo.exr&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">image_node</span><span class="o">.</span><span class="n">file_format</span><span class="p">)</span>
 <span class="gp">... </span><span class="n">openexr</span>
@@ -311,8 +312,8 @@ file_format as the source ImageBuf.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="image_utils.image.Read.has_alpha">
-<code class="descname">has_alpha</code><a class="headerlink" href="#image_utils.image.Read.has_alpha" title="Permalink to this definition">¶</a></dt>
+<dt id="image_utils.nodes.image.Read.has_alpha">
+<code class="descname">has_alpha</code><a class="headerlink" href="#image_utils.nodes.image.Read.has_alpha" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not the image has alpha</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -327,8 +328,8 @@ file_format as the source ImageBuf.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="image_utils.image.Read.height">
-<code class="descname">height</code><a class="headerlink" href="#image_utils.image.Read.height" title="Permalink to this definition">¶</a></dt>
+<dt id="image_utils.nodes.image.Read.height">
+<code class="descname">height</code><a class="headerlink" href="#image_utils.nodes.image.Read.height" title="Permalink to this definition">¶</a></dt>
 <dd><p>Image height</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -341,8 +342,8 @@ file_format as the source ImageBuf.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="image_utils.image.Read.path">
-<code class="descname">path</code><a class="headerlink" href="#image_utils.image.Read.path" title="Permalink to this definition">¶</a></dt>
+<dt id="image_utils.nodes.image.Read.path">
+<code class="descname">path</code><a class="headerlink" href="#image_utils.nodes.image.Read.path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Path to the source image</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -355,14 +356,14 @@ file_format as the source ImageBuf.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="image_utils.image.Read.premult">
-<code class="descname">premult</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_utils/image.html#Read.premult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_utils.image.Read.premult" title="Permalink to this definition">¶</a></dt>
+<dt id="image_utils.nodes.image.Read.premult">
+<code class="descname">premult</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_utils/nodes/image.html#Read.premult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_utils.nodes.image.Read.premult" title="Permalink to this definition">¶</a></dt>
 <dd><p>pre-multiply the channels by alpha</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="image_utils.image.Read.set_data_window">
-<code class="descname">set_data_window</code><span class="sig-paren">(</span><em>x1</em>, <em>y1</em>, <em>x2</em>, <em>y2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_utils/image.html#Read.set_data_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_utils.image.Read.set_data_window" title="Permalink to this definition">¶</a></dt>
+<dt id="image_utils.nodes.image.Read.set_data_window">
+<code class="descname">set_data_window</code><span class="sig-paren">(</span><em>x1</em>, <em>y1</em>, <em>x2</em>, <em>y2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_utils/nodes/image.html#Read.set_data_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_utils.nodes.image.Read.set_data_window" title="Permalink to this definition">¶</a></dt>
 <dd><p>set data window (a.k.a. display window)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -381,14 +382,14 @@ file_format as the source ImageBuf.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="image_utils.image.Read.unpremult">
-<code class="descname">unpremult</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_utils/image.html#Read.unpremult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_utils.image.Read.unpremult" title="Permalink to this definition">¶</a></dt>
+<dt id="image_utils.nodes.image.Read.unpremult">
+<code class="descname">unpremult</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_utils/nodes/image.html#Read.unpremult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_utils.nodes.image.Read.unpremult" title="Permalink to this definition">¶</a></dt>
 <dd><p>un-premultiply the channels by alpha</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="image_utils.image.Read.width">
-<code class="descname">width</code><a class="headerlink" href="#image_utils.image.Read.width" title="Permalink to this definition">¶</a></dt>
+<dt id="image_utils.nodes.image.Read.width">
+<code class="descname">width</code><a class="headerlink" href="#image_utils.nodes.image.Read.width" title="Permalink to this definition">¶</a></dt>
 <dd><p>Image width</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -403,17 +404,17 @@ file_format as the source ImageBuf.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-image_utils.image.constant">
-<span id="constant"></span><h2><cite>Constant</cite><a class="headerlink" href="#module-image_utils.image.constant" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-image_utils.nodes.image.constant">
+<span id="constant"></span><h2><cite>Constant</cite><a class="headerlink" href="#module-image_utils.nodes.image.constant" title="Permalink to this headline">¶</a></h2>
 <p>Create constant image with specific dimension and color</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># import the required module</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="kn">import</span> <span class="n">constant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="kn">import</span> <span class="n">image</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a red 4k by 3k constant image in red</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">constant_img</span> <span class="o">=</span> <span class="n">constant</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">constant_image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># save it as png</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">constant_img</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;foo.png&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">constant_image</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;foo.png&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -444,15 +445,15 @@ file_format as the source ImageBuf.</p>
 </tbody>
 </table>
 </div>
-<div class="section" id="module-image_utils.image.checker">
-<span id="checker"></span><h2><cite>Checker</cite><a class="headerlink" href="#module-image_utils.image.checker" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-image_utils.nodes.image.checker">
+<span id="checker"></span><h2><cite>Checker</cite><a class="headerlink" href="#module-image_utils.nodes.image.checker" title="Permalink to this headline">¶</a></h2>
 <p>Create checker image. default is black and white checker color</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the checker module</span>
-<span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="kn">import</span> <span class="n">checker</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># import the checker module</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="kn">import</span> <span class="n">image</span>
 
-<span class="c1"># create a 4k checker, red by blue color, with 10 cells</span>
-<span class="n">checker_image</span> <span class="o">=</span> <span class="n">checker</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="mi">4000</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
-<span class="n">checker_image</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;check_me.png&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a 4k checker, red by blue color, with 10 cells</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">checker_image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">checker</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="mi">4000</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">checker_image</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;check_me.png&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Result</p>

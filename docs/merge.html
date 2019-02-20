@@ -86,10 +86,10 @@
 <li class="toctree-l2"><a class="reference internal" href="image.html">Image Node</a></li>
 <li class="toctree-l2"><a class="reference internal" href="color.html">Color</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Merge</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.merge.over">Over</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.merge.zover">ZOver</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.merge.add">Add</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.merge.sub">Sub</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.nodes.merge.over">Over</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.nodes.merge.zover">ZOver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.nodes.merge.add">Add</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.nodes.merge.sub">Sub</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="transform.html">Transform</a></li>
@@ -163,18 +163,9 @@
             
   <div class="section" id="merge">
 <h1>Merge<a class="headerlink" href="#merge" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-image_utils.merge.over">
-<span id="over"></span><h2>Over<a class="headerlink" href="#module-image_utils.merge.over" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-image_utils.nodes.merge.over">
+<span id="over"></span><h2>Over<a class="headerlink" href="#module-image_utils.nodes.merge.over" title="Permalink to this headline">¶</a></h2>
 <p>composite <em>(merge)</em> input A over input B</p>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="k">import</span> <span class="n">Read</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.merge</span> <span class="k">import</span> <span class="n">over</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">foreground_image</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s2">&quot;fg.exr&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">background_image</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s2">&quot;bg.exr&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">merged_image</span> <span class="o">=</span> <span class="n">over</span><span class="p">(</span><span class="n">foreground_image</span><span class="p">,</span> <span class="n">background_image</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">merged_image</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;result.exr&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -194,18 +185,17 @@
 </tbody>
 </table>
 </div>
-<div class="section" id="module-image_utils.merge.zover">
-<span id="zover"></span><h2>ZOver<a class="headerlink" href="#module-image_utils.merge.zover" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-image_utils.nodes.merge.zover">
+<span id="zover"></span><h2>ZOver<a class="headerlink" href="#module-image_utils.nodes.merge.zover" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
 <dt>composite input A and input B using their respective Z channels to</dt>
 <dd>decide which is in front on a pixel-by-pixel basis.</dd>
 </dl>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="k">import</span> <span class="n">Read</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.merge</span> <span class="k">import</span> <span class="n">zover</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">image_a</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s2">&quot;A.exr&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">image_b</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s2">&quot;B.exr&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">z_merged_image</span> <span class="o">=</span> <span class="n">over</span><span class="p">(</span><span class="n">image_a</span><span class="p">,</span> <span class="n">image_b</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="kn">import</span> <span class="n">image</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="kn">import</span> <span class="n">merge</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_a</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s2">&quot;A.exr&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image_b</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s2">&quot;B.exr&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z_merged_image</span> <span class="o">=</span> <span class="n">merge</span><span class="o">.</span><span class="n">over</span><span class="p">(</span><span class="n">image_a</span><span class="p">,</span> <span class="n">image_b</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">z_merged_image</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;result.exr&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -217,7 +207,7 @@
 </tr>
 <tr class="field-even field"><th class="field-name">param input_a:</th><td class="field-body">foreground image</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">type input_b:</th><td class="field-body">Read</td>
+<tr class="field-odd field"><th class="field-name">type input_b:</th><td class="field-body"><a class="reference internal" href="image.html#read-node"><span class="std std-ref">Read</span></a></td>
 </tr>
 <tr class="field-even field"><th class="field-name">param input_b:</th><td class="field-body">background image</td>
 </tr>
@@ -228,15 +218,15 @@
 </tbody>
 </table>
 </div>
-<div class="section" id="module-image_utils.merge.add">
-<span id="add"></span><h2>Add<a class="headerlink" href="#module-image_utils.merge.add" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-image_utils.nodes.merge.add">
+<span id="add"></span><h2>Add<a class="headerlink" href="#module-image_utils.nodes.merge.add" title="Permalink to this headline">¶</a></h2>
 <p>add input A to input B</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="k">import</span> <span class="n">Read</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.merge</span> <span class="k">import</span> <span class="n">add</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">input_a</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s2">&quot;image_a.exr&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">input_b</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s2">&quot;image_b.exr&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">add_image</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="n">input_a</span><span class="p">,</span> <span class="n">input_b</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="k">import</span> <span class="n">image</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="k">import</span> <span class="n">merge</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">input_a</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s2">&quot;image_a.exr&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">input_b</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s2">&quot;image_b.exr&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">add_image</span> <span class="o">=</span> <span class="n">merge</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">input_a</span><span class="p">,</span> <span class="n">input_b</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">add_image</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;result.exr&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -259,15 +249,14 @@
 </tbody>
 </table>
 </div>
-<div class="section" id="module-image_utils.merge.sub">
-<span id="sub"></span><h2>Sub<a class="headerlink" href="#module-image_utils.merge.sub" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-image_utils.nodes.merge.sub">
+<span id="sub"></span><h2>Sub<a class="headerlink" href="#module-image_utils.nodes.merge.sub" title="Permalink to this headline">¶</a></h2>
 <p>subtract input A from input B.</p>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="k">import</span> <span class="n">Read</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.merge</span> <span class="k">import</span> <span class="n">sub</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">input_a</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s2">&quot;image_a.exr&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">input_b</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s2">&quot;image_b.exr&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sub_image</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="n">input_a</span><span class="p">,</span> <span class="n">input_b</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="kn">import</span> <span class="n">image</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="kn">import</span> <span class="n">merge</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">input_a</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s2">&quot;image_a.exr&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">input_b</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s2">&quot;image_b.exr&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sub_image</span> <span class="o">=</span> <span class="n">merge</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">input_a</span><span class="p">,</span> <span class="n">input_b</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sub_image</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;result.exr&quot;</span><span class="p">)</span>
 </pre></div>
 </div>

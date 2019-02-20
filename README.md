@@ -7,6 +7,10 @@ The idea behind this utility module is to mimic the basic [Nuke](https://www.fou
 feature via `python`. This library uses `OpenImageIO` at its core and utilizes 
 its API features 
 
+==If you are comfortable with using OpenImageIo itself, I 
+recommend using that instead of this library. This library 
+is mostly for training purposes==
+
 ## Documentation
 
 For more info, please visit the [documentation page](https://alijafargholi.github.io/image_utils/)
@@ -14,10 +18,10 @@ For more info, please visit the [documentation page](https://alijafargholi.githu
 ## Getting Started
 
 ``` python
->>> from image_utils.image import constant
->>> from image_utils.image import Read
->>> from image_utils.transform import resize
->>> from image_utils.merge import over
+>>> from image_utils.nodes.image import constant
+>>> from image_utils.nodes.image import Read
+>>> from image_utils.nodes.transform import resize
+>>> from image_utils.nodes.merge import over
 >>> # create a red 4k constant image
 >>> constant_image = constant(4000, 4000, (1, 0, 0, 0))
 >>> # read an image into buffer

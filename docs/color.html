@@ -85,10 +85,10 @@
 <li class="toctree-l1 current"><a class="reference internal" href="nodes.html">Nodes</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="image.html">Image Node</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Color</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.color.clamp"><cite>Clamp</cite></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.color.set_color_look"><cite>Set Color Look</cite></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.color.set_color_display"><cite>Set Color Display</cite></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.color.gamma"><cite>Gamma</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.nodes.color.clamp"><cite>Clamp</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.nodes.color.set_color_look"><cite>Set Color Look</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.nodes.color.set_color_display"><cite>Set Color Display</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-image_utils.nodes.color.gamma"><cite>Gamma</cite></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="merge.html">Merge</a></li>
@@ -163,14 +163,13 @@
             
   <div class="section" id="color">
 <h1>Color<a class="headerlink" href="#color" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-image_utils.color.clamp">
-<span id="clamp"></span><h2><cite>Clamp</cite><a class="headerlink" href="#module-image_utils.color.clamp" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-image_utils.nodes.color.clamp">
+<span id="clamp"></span><h2><cite>Clamp</cite><a class="headerlink" href="#module-image_utils.nodes.color.clamp" title="Permalink to this headline">¶</a></h2>
 <p>clamp the source image’s pixel values between given min and max limit.</p>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="k">import</span> <span class="n">Read</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.color</span> <span class="k">import</span> <span class="n">clamp</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">source_image</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s2">&quot;source.exr&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">clamped_image</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="n">source_image</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="kn">import</span> <span class="n">image</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="kn">import</span> <span class="n">color</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">source_image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s2">&quot;source.exr&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">clamped_image</span> <span class="o">=</span> <span class="n">color</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">source_image</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">clamped_image</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;result.exr&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -207,32 +206,44 @@
 </tbody>
 </table>
 </div>
-<div class="section" id="module-image_utils.color.set_color_look">
-<span id="set-color-look"></span><h2><cite>Set Color Look</cite><a class="headerlink" href="#module-image_utils.color.set_color_look" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-image_utils.nodes.color.set_color_look">
+<span id="set-color-look"></span><h2><cite>Set Color Look</cite><a class="headerlink" href="#module-image_utils.nodes.color.set_color_look" title="Permalink to this headline">¶</a></h2>
 <p>apply an OpenColorIo “look” transform to the pixels</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">param source_image:</th></tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">type input_image:</th></tr>
 <tr class="field-odd field"><td>&#160;</td><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param input_image:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type look:</th><td class="field-body"></td>
 </tr>
 <tr class="field-even field"><th class="field-name">param look:</th><td class="field-body"></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body"></td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="module-image_utils.color.set_color_display">
-<span id="set-color-display"></span><h2><cite>Set Color Display</cite><a class="headerlink" href="#module-image_utils.color.set_color_display" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-image_utils.nodes.color.set_color_display">
+<span id="set-color-display"></span><h2><cite>Set Color Display</cite><a class="headerlink" href="#module-image_utils.nodes.color.set_color_display" title="Permalink to this headline">¶</a></h2>
 <p>apply an OpenColorIo “display” transform to the pixels</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">param source_image:</th></tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">type input_image:</th></tr>
 <tr class="field-odd field"><td>&#160;</td><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param input_image:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type display:</th><td class="field-body"></td>
 </tr>
 <tr class="field-even field"><th class="field-name">param display:</th><td class="field-body"></td>
 </tr>
@@ -241,17 +252,34 @@
 </tbody>
 </table>
 </div>
-<div class="section" id="module-image_utils.color.gamma">
-<span id="gamma"></span><h2><cite>Gamma</cite><a class="headerlink" href="#module-image_utils.color.gamma" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-image_utils.nodes.color.gamma">
+<span id="gamma"></span><h2><cite>Gamma</cite><a class="headerlink" href="#module-image_utils.nodes.color.gamma" title="Permalink to this headline">¶</a></h2>
 <p>apply gamma change to the source image.</p>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.image</span> <span class="k">import</span> <span class="n">Read</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.color</span> <span class="k">import</span> <span class="n">gamma</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">source_image</span> <span class="o">=</span> <span class="n">Read</span><span class="p">(</span><span class="s2">&quot;source.exr&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">gamma_corrected</span> <span class="o">=</span> <span class="n">gamma</span><span class="p">(</span><span class="n">source_image</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">gamma_corrected</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;result.exr&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="kn">import</span> <span class="n">image</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">image_utils.nodes</span> <span class="kn">import</span> <span class="n">color</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">source_image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s2">&quot;source.tif&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">color</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">source_image</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">source_image</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;result.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Source</th>
+<th class="head">Applied Gamma</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><img alt="_images/original_grid.png" class="first last" src="_images/original_grid.png" />
+</td>
+<td><img alt="_images/gammaed_2.png" class="first last" src="_images/gammaed_2.png" />
+</td>
+</tr>
+</tbody>
+</table>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />

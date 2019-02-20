@@ -10,7 +10,7 @@ Implementing **transform** node features:
 from OpenImageIO import ImageBufAlgo
 from OpenImageIO import ROI
 
-from image_utils.image import Read
+from image_utils.nodes.image import Read
 
 
 def crop(source_image, x1, y1, x2, y2):
@@ -23,10 +23,16 @@ def crop(source_image, x1, y1, x2, y2):
 
         >>> # read an image
         >>> source_image = Read('source.exr')
-        >>> # crop the source image and store it in a new variable
-        >>> bar = crop(source_image, 10, 10, 510, 510)
+        >>> # crop the source image
+        >>> crop(source_image, 0, 0, 500, 500)
         >>> # save the cropped image as a new image on disk
-        >>> bar.write('cropped.png')
+        >>> source_image.write('cropped.png')
+
+    ============================================================= =============================================================
+    Source                                                        Cropped
+    ============================================================= =============================================================
+    .. image:: ./_static/images/output_examples/original_grid.png     .. image:: ./_static/images/output_examples/cropped.png
+    ============================================================= =============================================================
 
     :type source_image: Image
     :param source_image: source image to crop
